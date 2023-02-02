@@ -14,6 +14,9 @@
 @property (nonatomic, strong) UIColor *glowColor;
 @property (nonatomic, strong) UIColor *innerGlowColor;
 @property (nonatomic, strong) NSString *text;
+
+@property (nonatomic, strong) UIImageView *contentImageView;
+
 - (void)resetSize;
 - (CGSize)sizeOfContents;
 @end

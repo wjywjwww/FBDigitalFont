@@ -41,6 +41,9 @@
     self.offColor          = UIColorFromRGB(0x222222);
     self.glowSize          = 0.0;
     self.innerGlowSize     = 0.0;
+    
+    self.contentImageView = [[UIImageView alloc]initWithFrame:self.bounds];
+    [self addSubview:self.contentImageView];
 }
 
 - (void)setText:(NSString *)text
@@ -55,6 +58,7 @@
     CGRect f = self.frame;
     f.size = [self sizeOfContents];
     self.frame = f;
+    self.contentImageView.frame = self.bounds;
 }
 
 - (CGSize)sizeOfContents
@@ -132,7 +136,15 @@
     ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
     CGContextSetShadowWithColor(ctx, CGSizeZero, self.glowSize, self.glowColor.CGColor);
-    [numImage drawAtPoint:CGPointMake(0.0, 0.0)];
+    [UIView transitionWithView:self.contentImageView
+                      duration:0.3f
+                       options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionCurveEaseInOut
+                    animations:^{
+        self.contentImageView.image = numImage;
+    } completion:^(BOOL finished) {
+        
+    }];
+
     CGContextRestoreGState(ctx);
     [innerShadow drawAtPoint:CGPointMake(0.0, 0.0)];
 }
